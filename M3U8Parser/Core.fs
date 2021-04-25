@@ -1,6 +1,22 @@
-﻿namespace M3U8Parser
+﻿module Core
 
-module Core =
-    let add x y =
-        let a = x * 2
-        a + y
+open PrefixConstants.HeaderConstants
+open PrefixConstants.BodyConstants
+open System
+
+let parseVersion (text: string) = ""
+let parseMedia (text: string) = ""
+let parseStreamInf (text: string) = ""
+
+let parseLine (line: string) =
+    let parts = line.Split [| ':' |]
+    let prefix = parts.[0]
+
+    let dd =
+        match prefix with
+        | STREAM_INF -> parseStreamInf parts.[1]
+        | VERSION -> parseVersion parts.[1]
+        | MEDIA -> parseMedia (parts.[1])
+        | _ -> ""
+
+    dd
